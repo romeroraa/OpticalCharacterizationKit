@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 1 - Flat Field Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Experiment 1 - Flat Field Analysis</h1>
+        <form action="/exp1_flat_field" method="post">
+            <div class="form-group">
+                <input type="text" name="folder_path" class="form-control" placeholder="Enter folder path" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if folder_path %}
+        <h2 class="mt-5">Processing Result for {{ folder_path }}</h2>
+        
+        {% if plots_2d %}
+        <h3>2D Channel Intensity</h3>
+        {% for plot in plots_2d %}
+        <img src="data:image/png;base64,{{ plot }}" class="img-fluid mb-4">
+        {% endfor %}
+        {% endif %}
+        
+        {% if plots_3d %}
+        <h3>3D Channel Intensity</h3>
+        {% for plot in plots_3d %}
+        <img src="data:image/png;base64,{{ plot }}" class="img-fluid mb-4">
+        {% endfor %}
+        {% endif %}
+        
+        {% endif %}
+        
+        {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 1 - Linearity Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Experiment 1 - Linearity Analysis</h1>
+        <form action="/exp1_linearity" method="post">
+            <div class="form-group">
+                <input type="text" name="folder_path" class="form-control" placeholder="Enter folder path" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if folder_path %}
+        <h2 class="mt-5">Processing Result for {{ folder_path }}</h2>
+        
+        {% if statistics_table %}
+        <h3>Linearity Statistics</h3>
+        <img src="data:image/png;base64,{{ statistics_table }}" class="img-fluid">
+        {% endif %}
+        
+        {% if linearity_plot %}
+        <h3>Linearity Plot</h3>
+        <img src="data:image/png;base64,{{ linearity_plot }}" class="img-fluid">
+        {% endif %}
+        
+        {% if residuals_plot %}
+        <h3>Residuals Plot</h3>
+        <img src="data:image/png;base64,{{ residuals_plot }}" class="img-fluid">
+        {% endif %}
+        
+        {% endif %}
+        
+        {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>

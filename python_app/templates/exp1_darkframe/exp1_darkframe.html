@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 1 - Dark Frame Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Experiment 1 - Dark Frame Analysis</h1>
+        <form action="/exp1_darkframe" method="post">
+            <div class="form-group">
+                <input type="text" name="folder_path" class="form-control" placeholder="Enter folder path" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if folder_path %}
+        <h2 class="mt-5">Processing Result for {{ folder_path }}</h2>
+        
+        {% if statistics_table %}
+        <h3>Statistics Table</h3>
+        <img src="data:image/png;base64,{{ statistics_table }}" class="img-fluid">
+        {% endif %}
+        
+        {% if histogram_image %}
+        <h3>Histogram</h3>
+        <img src="data:image/png;base64,{{ histogram_image }}" class="img-fluid">
+        {% endif %}
+        
+        {% if fpn_images %}
+        <h3>Fixed Pattern Noise</h3>
+        {% for image in fpn_images %}
+        <img src="data:image/png;base64,{{ image }}" class="img-fluid mb-4">
+        {% endfor %}
+        {% endif %}
+        
+        {% endif %}
+        
+        {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 5 - Sharpness Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Experiment 5 - Sharpness Analysis</h1>
+        <form action="/exp5" method="post">
+            <div class="form-group">
+                <input type="text" name="folder_path" class="form-control" placeholder="Enter folder path" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if folder_path %}
+        <h2 class="mt-5">Processing Result for {{ folder_path }}</h2>
+        
+        {% if sharpness_plot %}
+        <h3>Sharpness Plot</h3>
+        <img src="data:image/png;base64,{{ sharpness_plot }}" class="img-fluid mb-4">
+        {% endif %}
+        
+        {% if rgb_channels_plots %}
+        <h3>Sharpest Image RGB Channels</h3>
+        {% for channel, plot in rgb_channels_plots.items() %}
+        <h4>{{ channel }} Channel - Filename: {{ plot.filename }} - Index: {{ plot.index }}</h4>
+        <img src="data:image/png;base64,{{ plot.plot }}" class="img-fluid mb-4">
+        {% endfor %}
+        {% endif %}
+        
+        {% endif %}
+        
+        {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>

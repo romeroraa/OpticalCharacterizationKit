@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 7 - Camera Exposure Stability</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Experiment 7 - Camera Exposure Stability</h1>
+        <form action="/exp7" method="post">
+            <div class="form-group">
+                <input type="text" name="folder_path" class="form-control" placeholder="Enter folder path">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+        {% if plots %}
+        <h2 class="mt-5">Equation</h2>
+        <p>
+            The equation used for curve fitting is:
+        </p>
+        <p>
+            \( A \cdot (1 - \exp(-x / Fc)) + Ao \)
+        </p>
+
+        <h2 class="mt-5">Plots</h2>
+        <div class="row mt-5">
+            <div class="col-12">
+                <img src="{{ url_for('exp7.static', filename=plots[0]) }}" class="img-fluid">
+            </div>
+        </div>
+        {% for plot in plots[1:] %}
+        <div class="row mt-5">
+            <div class="col-12">
+                <img src="{{ url_for('exp7.static', filename=plot) }}" class="img-fluid">
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 1 - Mean vs Variance Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Experiment 1 - Mean vs Variance Analysis</h1>
+        <form action="/exp1_mean_variance" method="post">
+            <div class="form-group">
+                <input type="text" name="folder_path" class="form-control" placeholder="Enter folder path" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if folder_path %}
+        <h2 class="mt-5">Processing Result for {{ folder_path }}</h2>
+        
+        {% if plots %}
+        <h3>Mean vs Variance Plots</h3>
+        {% for channel, plot in plots.items() %}
+        <h4>{{ channel }} Channel - Linear Fit: y = {{ fits[channel][0]|round(2) }}x + {{ fits[channel][1]|round(2) }}</h4>
+        <img src="data:image/png;base64,{{ plot }}" class="img-fluid mb-4">
+        {% endfor %}
+        {% endif %}
+        
+        {% if fits %}
+        <h3>Linear Fit Coefficients</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Channel</th>
+                    <th>Slope</th>
+                    <th>Intercept</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for channel, fit in fits.items() %}
+                <tr>
+                    <td>{{ channel }}</td>
+                    <td>{{ fit[0]|round(2) }}</td>
+                    <td>{{ fit[1]|round(2) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        
+        {% endif %}
+        
+        {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
